@@ -1,71 +1,113 @@
-# 🤖 Micromouse Bot
+# 🤖 ESP32 Micromouse Robot
 
-## Overview
-
-Micromouse Bot is an autonomous maze-solving robot designed to navigate unknown mazes using intelligent path-planning algorithms and sensor-based navigation. This project combines embedded systems, robotics, electronics, and programming to build an efficient and reliable autonomous robot.
+An autonomous Micromouse robot developed using ESP32 that can explore an unknown maze, generate a map, compute the shortest path using the Flood Fill algorithm, and perform a high-speed final run with PID wall following.
 
 ---
 
-## Project Objectives
+## 📌 Overview
 
-- Design an autonomous maze-solving robot.
-- Develop reliable obstacle detection and navigation.
-- Implement efficient path-planning algorithms.
-- Integrate hardware and software into a complete robotic system.
+This project was developed to demonstrate embedded systems programming, robotics, autonomous navigation, and path-planning algorithms.
 
----
+The robot autonomously:
 
-## Repository Contents
-
-- 📄 Micromouse Project Portfolio
-- 📄 Robot Hardware Blueprint
-- 📄 Technical Documentation
-
----
-
-## Hardware Components
-
-- Arduino
-- IR Sensors
-- Motor Driver
-- DC Motors
-- Robot Chassis
-- Battery Pack
+- Detects maze walls using IR sensors
+- Explores unknown mazes
+- Generates an internal maze map
+- Solves the maze using the Flood Fill algorithm
+- Performs a fast run on the shortest path
+- Uses PID control for accurate wall centering
+- Stores calibration data using ESP32 Preferences
+- Displays status on an OLED display
 
 ---
 
-## Software & Technologies
+## 🚀 Features
 
-- Arduino IDE
-- C/C++
-- Embedded Systems
-- Robotics Programming
-
----
-
-## Skills Demonstrated
-
-- Robotics Engineering
-- Embedded Systems
-- Electronics Design
-- Programming
-- Algorithm Design
-- Problem Solving
-- Sensor Integration
+- ESP32 based controller
+- Flood Fill shortest path algorithm
+- PID wall-following controller
+- Automatic sensor calibration
+- OLED status display
+- Motor speed correction
+- EEPROM/Preferences memory support
+- Modular repository structure
+- Ready for future simulator integration
 
 ---
 
-## Future Improvements
+## 🛠 Hardware Used
 
-- AI-based maze optimization
-- Computer vision integration
-- Wireless monitoring
-- Faster path planning
+| Component | Description |
+|-----------|-------------|
+| ESP32 | Main controller |
+| TB6612FNG | Motor driver |
+| N20 Gear Motors | Differential drive |
+| IR Sensor Array | Wall detection |
+| OLED Display | Status information |
+| Li-ion Battery | Power supply |
 
 ---
 
-## Author
+## 📁 Repository Structure
 
-**Vikas Kumar**
+```
+Micromouse-Robot/
+│
+├── docs/
+├── hardware/
+├── include/
+├── sim/
+├── src/
+│   └── micromouse_final.ino
+├── test/
+├── README.md
+└── LICENSE
+```
 
-Aspiring Computer Science student interested in Artificial Intelligence, Cybersecurity, Robotics, and Software Engineering.
+---
+
+## 🧠 Algorithms Used
+
+- Flood Fill Algorithm
+- PID Controller
+- Wall Detection
+- Maze Mapping
+- Path Optimization
+
+---
+
+## 🔧 Development Workflow
+
+Phase 1
+- Robot movement
+- Motor testing
+
+Phase 2
+- Sensor integration
+- Wall detection
+
+Phase 3
+- PID tuning
+- Stable navigation
+
+Phase 4
+- Maze solving
+- Flood Fill implementation
+- Fast run
+
+---
+
+## 📈 Future Improvements
+
+- Diagonal movement
+- Dynamic speed adjustment
+- Encoder-based odometry
+- Simulator support
+- Automatic maze visualization
+- Modular C++ architecture
+
+---
+
+## 📄 License
+
+This project is released under the MIT License.
