@@ -1,0 +1,46 @@
+flowchart TD
+
+    START["Start / Initialize Robot"]
+
+    INIT["Initialize Maze Data<br/>Position + Direction"]
+
+    SENSE["Read Wall Sensors"]
+
+    UPDATE["Update Current Cell<br/>with Wall Information"]
+
+    VISITED["Mark Cell as Visited"]
+
+    FLOOD["Calculate / Update<br/>Flood-Fill Distance Map"]
+
+    CHECK["Is Goal Reached?"]
+
+    SELECT["Select Best Valid<br/>Neighbor Cell"]
+
+    TURN["Calculate Required<br/>Direction / Turn"]
+
+    MOVE["Move to Next Cell"]
+
+    SEARCH["Continue Maze Search"]
+
+    GOAL["Goal Reached"]
+
+    FAST["Prepare / Execute<br/>Optimized Run"]
+
+    END["End"]
+
+    START --> INIT
+    INIT --> SENSE
+    SENSE --> UPDATE
+    UPDATE --> VISITED
+    VISITED --> FLOOD
+    FLOOD --> CHECK
+
+    CHECK -- "No" --> SELECT
+    SELECT --> TURN
+    TURN --> MOVE
+    MOVE --> SEARCH
+    SEARCH --> SENSE
+
+    CHECK -- "Yes" --> GOAL
+    GOAL --> FAST
+    FAST --> END
