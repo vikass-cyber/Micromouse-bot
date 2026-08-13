@@ -1,0 +1,43 @@
+flowchart TD
+
+    TARGET["Desired Motion<br/>Speed / Direction / Turn"]
+
+    CMD["Motion Command"]
+
+    PID["PID / Motion Controller"]
+
+    MOTOR_CMD["Motor PWM / Direction Command"]
+
+    DRIVER["TB6612FNG<br/>Motor Driver"]
+
+    MOTORS["Left + Right Motors"]
+
+    ROBOT["Robot Motion"]
+
+    ENC["Wheel Encoders"]
+
+    IR["IR Wall Sensors"]
+
+    MPU["MPU6050<br/>Orientation Feedback"]
+
+    FEEDBACK["Feedback Processing"]
+
+    ERROR["Motion Error / Correction"]
+
+    TARGET --> CMD
+    CMD --> PID
+    PID --> MOTOR_CMD
+    MOTOR_CMD --> DRIVER
+    DRIVER --> MOTORS
+    MOTORS --> ROBOT
+
+    ROBOT --> ENC
+    ROBOT --> IR
+    ROBOT --> MPU
+
+    ENC --> FEEDBACK
+    IR --> FEEDBACK
+    MPU --> FEEDBACK
+
+    FEEDBACK --> ERROR
+    ERROR --> PID
