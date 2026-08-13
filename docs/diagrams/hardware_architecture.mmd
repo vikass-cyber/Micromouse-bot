@@ -1,0 +1,46 @@
+flowchart LR
+
+    BAT["Battery"]
+
+    POWER["Power System"]
+
+    ESP["ESP32"]
+
+    DRIVER["TB6612FNG<br/>Motor Driver"]
+
+    LM["Left Motor"]
+    RM["Right Motor"]
+
+    IR["IR Sensor Array"]
+
+    LE["Left Encoder"]
+    RE["Right Encoder"]
+
+    MPU["MPU6050"]
+
+    OLED["OLED Display"]
+
+    BTN["Buttons"]
+
+    BUZ["Buzzer"]
+
+    BAT --> POWER
+    POWER --> ESP
+    POWER --> DRIVER
+
+    ESP --> DRIVER
+    DRIVER --> LM
+    DRIVER --> RM
+
+    LM --> LE
+    RM --> RE
+
+    LE --> ESP
+    RE --> ESP
+
+    IR --> ESP
+    MPU --> ESP
+
+    ESP --> OLED
+    BTN --> ESP
+    ESP --> BUZ
