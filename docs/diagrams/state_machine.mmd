@@ -1,0 +1,39 @@
+stateDiagram-v2
+
+    [*] --> INIT
+
+    INIT --> CALIBRATION
+    CALIBRATION --> IDLE
+
+    IDLE --> SEARCH
+    IDLE --> ERROR
+
+    SEARCH --> SENSE
+    SENSE --> MAP_UPDATE
+    MAP_UPDATE --> FLOOD_FILL
+    FLOOD_FILL --> NAVIGATION
+
+    NAVIGATION --> TURN
+    NAVIGATION --> MOVE
+
+    TURN --> SENSE
+    MOVE --> SENSE
+
+    SENSE --> GOAL_CHECK
+
+    GOAL_CHECK --> SEARCH: Goal not reached
+    GOAL_CHECK --> GOAL_REACHED: Goal reached
+
+    GOAL_REACHED --> FAST_RUN
+
+    FAST_RUN --> TURN
+    FAST_RUN --> MOVE
+
+    SEARCH --> ERROR
+    FAST_RUN --> ERROR
+
+    ERROR --> SAFE_STOP
+
+    SAFE_STOP --> IDLE
+
+    GOAL_REACHED --> [*]
