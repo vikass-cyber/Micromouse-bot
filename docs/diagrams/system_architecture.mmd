@@ -1,1 +1,98 @@
+flowchart TD
 
+    %% =========================
+    %% SENSOR SYSTEM
+    %% =========================
+
+    subgraph SENSORS["Sensor System"]
+        IR["IR Wall Sensors"]
+        ENC["Wheel Encoders"]
+        MPU["MPU6050 IMU"]
+    end
+
+    %% =========================
+    %% CONTROLLER
+    %% =========================
+
+    ESP["ESP32 Main Controller"]
+
+    %% =========================
+    %% ROBOT STATE
+    %% =========================
+
+    STATE["Robot State<br/>Position + Heading"]
+
+    %% =========================
+    %% MAZE SYSTEM
+    %% =========================
+
+    MAP["Maze Mapping"]
+    FLOOD["Flood-Fill / Path Planning"]
+
+    %% =========================
+    %% MOTION CONTROL
+    %% =========================
+
+    CMD["Motion Command"]
+    PID["PID / Motion Control"]
+    DRIVER["Motor Driver"]
+    MOTORS["Left + Right Motors"]
+    ROBOT["Robot Motion"]
+
+    %% =========================
+    %% USER INTERFACE
+    %% =========================
+
+    subgraph UI["User Interface"]
+        OLED["OLED Display"]
+        BUTTONS["Control Buttons"]
+        BUZZER["Buzzer"]
+    end
+
+    %% =========================
+    %% POWER / SAFETY
+    %% =========================
+
+    BATTERY["Battery Voltage Monitoring"]
+    SAFETY["Battery / Error Safety"]
+
+    %% =========================
+    %% MAIN DATA FLOW
+    %% =========================
+
+    IR --> ESP
+    ENC --> ESP
+    MPU --> ESP
+
+    ESP --> STATE
+    STATE --> MAP
+    MAP --> FLOOD
+    FLOOD --> CMD
+    CMD --> PID
+    PID --> DRIVER
+    DRIVER --> MOTORS
+    MOTORS --> ROBOT
+
+    %% =========================
+    %% FEEDBACK
+    %% =========================
+
+    ROBOT -. Feedback .-> ENC
+    ROBOT -. Feedback .-> IR
+    ROBOT -. Orientation Feedback .-> MPU
+
+    %% =========================
+    %% USER INTERFACE
+    %% =========================
+
+    BUTTONS --> ESP
+    ESP --> OLED
+    ESP --> BUZZER
+
+    %% =========================
+    %% POWER SAFETY
+    %% =========================
+
+    BATTERY --> ESP
+    ESP --> SAFETY
+    SAFETY -. Stop / Error .-> DRIVER
