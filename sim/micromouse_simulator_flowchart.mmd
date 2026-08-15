@@ -1,0 +1,36 @@
+flowchart TD
+
+    A["Start Simulator"] --> B["Load Test Maze"]
+    B --> C{"Maze Valid?"}
+
+    C -- "No" --> D["Report Validation Error"]
+    D --> Z["Stop"]
+
+    C -- "Yes" --> E["Initialize Robot"]
+    E --> F["Set Robot Position & Direction"]
+    F --> G["Set Goal"]
+    G --> H["Calculate Flood-Fill Distances"]
+
+    H --> I["Check Current Cell"]
+    I --> J{"Goal Reached?"}
+
+    J -- "Yes" --> K["Report SUCCESS"]
+    K --> Z
+
+    J -- "No" --> L["Find Valid Neighbor"]
+    L --> M{"Lower Flood-Fill Distance?"}
+
+    M -- "No" --> N["Report FAIL: No Valid Path"]
+    N --> Z
+
+    M -- "Yes" --> O["Determine Target Direction"]
+    O --> P["Turn Robot"]
+    P --> Q["Move Forward"]
+
+    Q --> R{"Wall Blocking?"}
+
+    R -- "Yes" --> S["Report FAIL: Wall Collision"]
+    S --> Z
+
+    R -- "No" --> T["Mark Cell Visited"]
+    T --> I
