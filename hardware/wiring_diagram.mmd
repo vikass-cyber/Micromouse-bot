@@ -1,0 +1,105 @@
+graph TD
+
+    %% =========================================================
+    %% POWER SYSTEM
+    %% =========================================================
+
+    subgraph POWER["1. POWER SYSTEM"]
+        BAT["Battery"]
+        BMON["Battery Voltage Monitoring"]
+    end
+
+    %% =========================================================
+    %% ESP32
+    %% =========================================================
+
+    subgraph CONTROLLER["2. ESP32 CONTROLLER"]
+        ESP["ESP32"]
+    end
+
+    BAT --> BMON
+    BMON -->|"GPIO 34 / ADC"| ESP
+
+    %% =========================================================
+    %% MOTOR SYSTEM
+    %% =========================================================
+
+    subgraph MOTORS["3. MOTOR SYSTEM"]
+        DRIVER["TB6612FNG Motor Driver"]
+        LM["Left Motor"]
+        RM["Right Motor"]
+    end
+
+    ESP -->|"GPIO 25 - PWM"| DRIVER
+    ESP -->|"GPIO 26 - Left IN1"| DRIVER
+    ESP -->|"GPIO 27 - Left IN2"| DRIVER
+
+    ESP -->|"GPIO 14 - PWM"| DRIVER
+    ESP -->|"GPIO 12 - Right IN1"| DRIVER
+    ESP -->|"GPIO 13 - Right IN2"| DRIVER
+
+    ESP -->|"GPIO 33 - STBY"| DRIVER
+
+    DRIVER -->|"Left Motor Output"| LM
+    DRIVER -->|"Right Motor Output"| RM
+
+    %% =========================================================
+    %% ENCODERS
+    %% =========================================================
+
+    subgraph ENCODERS["4. WHEEL ENCODERS"]
+        LE["Left Encoder"]
+        RE["Right Encoder"]
+    end
+
+    LM -.->|"Mechanical Feedback"| LE
+    RM -.->|"Mechanical Feedback"| RE
+
+    LE -->|"Phase A: GPIO 34"| ESP
+    LE -->|"Phase B: GPIO 35"| ESP
+
+    RE -->|"Phase A: GPIO 32"| ESP
+    RE -->|"Phase B: GPIO 39"| ESP
+
+    %% =========================================================
+    %% IR SENSORS
+    %% =========================================================
+
+    subgraph IRSENSORS["5. IR DISTANCE SENSORS"]
+        IRL["Left IR Sensor"]
+        IRF["Front IR Sensor"]
+        IRR["Right IR Sensor"]
+    end
+
+    IRL -->|"GPIO 36 / ADC"| ESP
+    IRF -->|"GPIO 39 / ADC"| ESP
+    IRR -->|"GPIO 35 / ADC"| ESP
+
+    %% =========================================================
+    %% IMU + DISPLAY
+    %% =========================================================
+
+    subgraph I2C["6. I2C DEVICES"]
+        MPU["MPU6050 IMU<br/>Address 0x68"]
+        OLED["SSD1306 OLED<br/>Address 0x3C"]
+    end
+
+    ESP -->|"GPIO 21 - SDA"| MPU
+    ESP -->|"GPIO 22 - SCL"| MPU
+
+    ESP -->|"GPIO 21 - SDA"| OLED
+    ESP -->|"GPIO 22 - SCL"| OLED
+
+    %% =========================================================
+    %% USER INTERFACE
+    %% =========================================================
+
+    subgraph UI["7. USER INTERFACE"]
+        NEXT["NEXT Button"]
+        SELECT["SELECT Button"]
+        BUZZ["Buzzer"]
+    end
+
+    NEXT -->|"GPIO 0"| ESP
+    SELECT -->|"GPIO 4"| ESP
+    ESP -->|"GPIO 18"| BUZZ
